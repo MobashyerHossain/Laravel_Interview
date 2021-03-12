@@ -6,7 +6,7 @@
                     <div class="card-body">
                         <div class="form-group">
                             <label for="">Product Name</label>
-                            <input type="text" v-model="product_name" placeholder="Product Name" class="form-control">
+                            <input type="text" v-model="product_name" placeholder="{{ product.title }}" class="form-control">
                         </div>
                         <div class="form-group">
                             <label for="">Product SKU</label>
@@ -35,13 +35,13 @@
                         <h6 class="m-0 font-weight-bold text-primary">Variants</h6>
                     </div>
                     <div class="card-body">
-                        <div class="row" v-for="(item,index) in product_variant">
+                        <div class="row" v-for="(item,index) in product_variant" :key="item.id">
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="">Option</label>
                                     <select v-model="item.option" class="form-control">
                                         <option v-for="variant in variants"
-                                                :value="variant.id">
+                                                :key="variant.id">
                                             {{ variant.title }}
                                         </option>
                                     </select>
@@ -74,7 +74,7 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr v-for="variant_price in product_variant_prices">
+                                <tr v-for="variant_price in product_variant_prices" v-bind:key="variant_price">
                                     <td>{{ variant_price.title }}</td>
                                     <td>
                                         <input type="text" class="form-control" v-model="variant_price.price">
@@ -109,6 +109,9 @@ export default {
     props: {
         variants: {
             type: Array,
+            required: true
+        },
+        product: {
             required: true
         }
     },

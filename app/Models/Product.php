@@ -26,4 +26,8 @@ class Product extends Model
     function getVariantPrices(){
         return ProductVariantPrice::where('product_id', $this->id)->get();
     }
+
+    function getTotalProductCount(){
+        return count(Product::all());
+    }
 }

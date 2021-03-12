@@ -89,10 +89,10 @@
         <div class="card-footer">
             <div class="row justify-content-between">
                 <div class="col-md-6">
-                    <p>Showing 1 to 10 out of 100</p>
+                    <p>Showing {{$products->currentPage()*2 - 1}} to {{$products->currentPage()*2 < $products->total() ? $products->currentPage()*2 : $products->total()}} out of {{$products->total()}}</p>
                 </div>
                 <div class="col-md-2">
-
+                    {{$products->links()}}
                 </div>
             </div>
         </div>
