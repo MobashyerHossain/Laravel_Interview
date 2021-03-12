@@ -15,4 +15,15 @@ class Product extends Model
         return Carbon::parse($this->created_at)->diffForHumans();
     }
 
+    function getProductVariants(){
+        return ProductVariant::where('product_id', $this->id)->get();
+    }
+
+    function getImage(){
+        return ProductImage::where('product_id', $this->id)->get();
+    }
+
+    function getVariantPrices(){
+        return ProductVariantPrice::where('product_id', $this->id)->get();
+    }
 }

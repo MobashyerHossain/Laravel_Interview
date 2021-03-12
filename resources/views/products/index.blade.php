@@ -44,7 +44,7 @@
                     <tr>
                         <th>#</th>
                         <th>Title</th>
-                        <th>Description</th>
+                        <th width="550px">Description</th>
                         <th>Variant</th>
                         <th width="150px">Action</th>
                     </tr>
@@ -55,25 +55,28 @@
                     <tr>
                         <td>{{$product->id}}</td>
                         <td>{{$product->title}} <br> Created at : {{$product->getTimePast()}}</td>
-                        <td>Quality product in low cost</td>
+                        <td>{{$product->description}}</td>
                         <td>
-                            <dl class="row mb-0" style="height: 80px; overflow: hidden" id="variant">
-
+                            <dl class="row mb-0" style="height: 80px; overflow: hidden" id="variant{{$product->id}}">
+                                @foreach ($product->getVariantPrices() as $variantprice)
                                 <dt class="col-sm-3 pb-0">
-                                    SM/ Red/ V-Nick
+                                    @foreach ($variantprice->getProductVariants() as $productvarient)
+                                        {{$productvarient->variant}} /
+                                    @endforeach
                                 </dt>
                                 <dd class="col-sm-9">
                                     <dl class="row mb-0">
-                                        <dt class="col-sm-4 pb-0">Price : {{ number_format(200,2) }}</dt>
-                                        <dd class="col-sm-8 pb-0">InStock : {{ number_format(50,2) }}</dd>
+                                        <dt class="col-sm-4 pb-0">Price : {{ number_format($variantprice->price,2) }}</dt>
+                                        <dd class="col-sm-8 pb-0">InStock : {{ number_format($variantprice->stock,2) }}</dd>
                                     </dl>
                                 </dd>
+                                @endforeach
                             </dl>
-                            <button onclick="$('#variant').toggleClass('h-auto')" class="btn btn-sm btn-link">Show more</button>
+                            <button onclick="$('#variant{{$product->id}}').toggleClass('h-auto')" class="btn btn-sm btn-link">Show more</button>
                         </td>
                         <td>
                             <div class="btn-group btn-group-sm">
-                                <a href="{{ route('product.edit', 1) }}" class="btn btn-success">Edit</a>
+                                <a href="{{ route('product.edit', $product->id) }}" class="btn btn-success">Edit</a>
                             </div>
                         </td>
                     </tr>
